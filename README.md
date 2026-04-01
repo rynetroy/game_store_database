@@ -146,7 +146,7 @@ You can view the project interface here:
 
 👉 Open `index.html`  
 or
-https://rynetroy.github.io/game_stroy_database/#erd
+https://rynetroy.github.io/game_stroy_database/
 
 
 ---
