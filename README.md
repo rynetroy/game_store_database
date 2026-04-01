@@ -59,6 +59,56 @@ This system answers key business questions such as:
 
 ---
 
+## 📈 Business Impact
+
+This project simulates real-world business insights that support data-driven decision-making.
+
+### 💰 Revenue Optimization
+- Identified top-performing product categories driving the highest revenue  
+- Enabled revenue breakdown analysis by category, customer, and time period  
+- Simulated **peak-hour pricing impact**, demonstrating how dynamic pricing increases rental revenue  
+
+---
+
+### 👤 Customer Insights
+- Ranked customers by total spending to identify **high-value segments**  
+- Analyzed purchasing behavior to support **targeted promotions and retention strategies**  
+- Identified niche customer groups (e.g., rulebook buyers with no table usage) for cross-selling opportunities  
+
+---
+
+### 🪑 Operational Efficiency
+- Measured **table utilization rates** to identify idle vs high-demand periods  
+- Determined **busiest days and peak hours**, supporting staffing and scheduling decisions  
+- Implemented reservation availability logic to improve customer experience  
+
+---
+
+### 📦 Inventory & Product Strategy
+- Evaluated product performance using attribute-based filtering (EAV model)  
+- Identified high-demand product types (e.g., miniatures, dice sets)  
+- Supported pricing and stocking decisions based on demand trends  
+
+---
+
+### ⚙️ Advanced Analytics Capability
+- Built queries across **17 interconnected tables**, simulating real production environments  
+- Applied advanced SQL logic to solve business problems end-to-end  
+- Translated business questions into **scalable data solutions**  
+
+---
+
+### 🚀 Business Value Summary
+
+This system enables a retail business to:
+
+- Increase revenue through pricing and product insights  
+- Improve customer targeting and engagement  
+- Optimize in-store resource utilization  
+- Support data-driven operational decisions  
+
+---
+
 ## 🗄️ Database Structure
 
 The database consists of **17 interconnected tables**, including:
@@ -129,7 +179,7 @@ This enables dynamic filtering but requires advanced querying techniques like **
 - Querying the **EAV model efficiently**  
 - Handling **time overlap logic** for reservations  
 - Managing **complex joins across multiple tables**  
-- Ensing accurate aggregation across transactional data  
+- Ensuring accurate aggregation across transactional data  
 
 ---
 
@@ -145,9 +195,8 @@ This enables dynamic filtering but requires advanced querying techniques like **
 You can view the project interface here:
 
 👉 Open `index.html`  
-or
+or  
 https://rynetroy.github.io/game_stroy_database/
-
 
 ---
 
@@ -186,5 +235,3 @@ This project highlights practical SQL skills aligned with real-world analytics r
 - Business-driven querying  
 - Data modeling  
 - Performance analysis  
-
-
