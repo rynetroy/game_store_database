@@ -616,24 +616,24 @@ ORDER BY number_of_products DESC;` },
 SELECT p.product_name, COUNT(*)
 FROM inventory i
 JOIN products p on p.product_id = i.product_id
-WHERE p.product_name = "Betrayal at House on the Hill"
-
+WHERE p.product_name = "Betrayal at House on the Hill" AND i.store_id = 1
+ 
 -- create view for easy access to table information
 CREATE OR REPLACE VIEW open_tables AS
-SELECT t.table_id,
+SELECT t.store_id, t.table_id, t.table_price_per_hour,
     -- transpose feature_name and value_numerical into columns for each feature_name
     MAX(CASE WHEN f.feature_name = "Capacity" THEN tf.value_numerical END) AS Capacity,
     MAX(CASE WHEN f.feature_name = "Cupholder" THEN tf.value_numerical END) AS Cupholders,
-    MAX(CASE WHEN f.feature_name = "Number of Screens" THEN tf.value_numerical END) AS \`Num Screens\`
+    MAX(CASE WHEN f.feature_name = "Number of Screens" THEN tf.value_numerical END) AS `Num Screens`
 FROM tables t
     LEFT JOIN table_features tf ON tf.table_id = t.table_id
     LEFT JOIN features f ON f.feature_id = tf.feature_id
 GROUP BY t.table_id;
-
-SELECT table_id, \`Capacity\`
+ 
+SELECT table_id, `Capacity`, store_id
 FROM open_tables
-WHERE \`Capacity\` >= 5 AND \`Cupholders\` > 0
-    -- Disclude tables that are booked at that starting time to the end of the game time
+WHERE `Capacity` >= 5 AND `Cupholders` > 0 AND store_id = 1
+        -- Disclude tables that are booked at that starting time to the end of the game time
     AND table_id NOT IN(SELECT tr.table_id
         FROM table_reservations tr
         WHERE '2026-04-01 14:00:00' < tr.reservation_end
