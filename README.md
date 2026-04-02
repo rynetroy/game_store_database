@@ -1,5 +1,6 @@
 # 🎮 DROP IF Orphan  
 ### Video Game Retailer Sales Analysis Database
+https://rynetroy.github.io/game_store_database/
 
 ---
 
