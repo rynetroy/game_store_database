@@ -1,5 +1,5 @@
 # 🎮 DROP IF Orphan  
-### Video Game Retailer Sales Analysis Database
+### Video Game Retailer Sales & Operations Analytics Database  
 https://rynetroy.github.io/game_store_database/
 
 ---
@@ -8,105 +8,83 @@ https://rynetroy.github.io/game_store_database/
 
 **DROP IF Orphan** is a database-driven analytics system designed to simulate and evaluate the operations of a modern video game and tabletop retailer.
 
-This project uses a **relational SQL database** to model real-world business scenarios and generate insights on:
+The project leverages a **relational SQL database** to model real-world business workflows and generate actionable insights across:
 
-- Sales performance  
-- Customer behavior  
-- Inventory structure  
-- Table rental utilization  
-
-The system supports complex queries to uncover trends in revenue, demand, and operations.
+- 📈 Sales performance  
+- 🧍 Customer behavior  
+- 📦 Inventory management  
+- 🪑 Table rental utilization  
 
 ---
 
 ## 🏪 Business Context
 
-This database models a hybrid retail business that includes:
+This system models a hybrid retail business that includes:
 
-- 🎲 **Product Sales**  
-  Video games, board games, miniatures, dice, and accessories  
-
-- 🪑 **Table Rentals**  
-  In-store gaming sessions with reservable tables  
-
-- 💰 **Dynamic Pricing**  
-  Peak-hour pricing rules for rentals  
-
-- 🏬 **Multi-Location Support**  
-  Multiple stores with independent inventory, employees, and operations  
+- 🎲 **Product Sales** – Board games, miniatures, dice, and accessories  
+- 🪑 **Table Rentals** – In-store gaming sessions with reservations  
+- 💰 **Dynamic Pricing** – Peak-hour pricing rules for rentals  
+- 🏬 **Multi-Location Support** – Independent store operations and inventory  
 
 ---
 
 ## 🎯 Objectives
 
-The goal of this project is to apply **data-driven analysis using SQL** to:
+This project demonstrates how SQL can be used to solve real-world business problems by:
 
-- Design a **normalized relational database**
-- Execute **complex multi-table queries**
-- Analyze **customer purchasing behavior**
-- Solve **real-world retail problems using data logic**
+- Designing a **fully normalized relational database**  
+- Executing **complex multi-table queries**  
+- Analyzing **customer and transaction data**  
+- Translating business questions into **data-driven insights**  
 
 ---
 
-## 🧠 Key Analytical Questions
+## 🧠 Key Business Questions
 
-This system answers key business questions such as:
+The system answers critical operational questions such as:
 
-- Which product categories generate the highest revenue?  
-- Who are the top-spending customers over time?  
-- What are the busiest days for in-store activity?  
-- Which inventory items meet specific attribute criteria?  
-- How do peak pricing rules affect total revenue?  
+- Which product categories generate the most revenue?  
+- Who are the highest-value customers over time?  
+- What are the busiest days and peak usage hours?  
+- How do pricing rules impact total revenue?  
+- Which customers purchase products but do not engage in rentals?  
 
 ---
 
 ## 📈 Business Impact
 
-This project simulates real-world business insights that support data-driven decision-making.
-
 ### 💰 Revenue Optimization
-- Identified top-performing product categories driving the highest revenue  
-- Enabled revenue breakdown analysis by category, customer, and time period  
-- Simulated **peak-hour pricing impact**, demonstrating how dynamic pricing increases rental revenue  
+- Identified top-performing product categories and revenue drivers  
+- Enabled breakdown of revenue by customer, category, and time  
+- Simulated **dynamic pricing impact** on rental revenue  
 
 ---
 
 ### 👤 Customer Insights
-- Ranked customers by total spending to identify **high-value segments**  
-- Analyzed purchasing behavior to support **targeted promotions and retention strategies**  
-- Identified niche customer groups (e.g., rulebook buyers with no table usage) for cross-selling opportunities  
+- Ranked customers by total spending to identify high-value segments  
+- Analyzed behavior to support targeted promotions and retention  
+- Identified cross-sell opportunities (e.g., product buyers not renting tables)  
 
 ---
 
 ### 🪑 Operational Efficiency
-- Measured **table utilization rates** to identify idle vs high-demand periods  
-- Determined **busiest days and peak hours**, supporting staffing and scheduling decisions  
-- Implemented reservation availability logic to improve customer experience  
+- Measured **table utilization rates** to detect peak demand  
+- Identified busiest days and hours for staffing optimization  
+- Implemented availability logic to improve booking decisions  
 
 ---
 
 ### 📦 Inventory & Product Strategy
 - Evaluated product performance using attribute-based filtering (EAV model)  
-- Identified high-demand product types (e.g., miniatures, dice sets)  
-- Supported pricing and stocking decisions based on demand trends  
+- Identified high-demand product types  
+- Supported pricing and stocking decisions based on demand patterns  
 
 ---
 
 ### ⚙️ Advanced Analytics Capability
-- Built queries across **17 interconnected tables**, simulating real production environments  
-- Applied advanced SQL logic to solve business problems end-to-end  
-- Translated business questions into **scalable data solutions**  
-
----
-
-### 🚀 Business Value Summary
-
-This system enables a retail business to:
-
-- Increase revenue through pricing and product insights  
-- Improve customer targeting and engagement  
-- Optimize in-store resource utilization  
-- Support data-driven operational decisions  
+- Built queries across **17 interconnected tables**  
+- Applied advanced SQL logic to solve end-to-end business problems  
+- Translated operational challenges into scalable data solutions  
 
 ---
 
@@ -129,29 +107,27 @@ The database consists of **17 interconnected tables**, including:
 - Attributes (EAV model)  
 
 ### Design Features
+- Fully normalized schema  
 - Junction tables for many-to-many relationships  
-- Fully normalized schema to reduce redundancy  
 
 ---
 
 ## ⚙️ Technical Highlights
 
 ### 🔹 Entity-Attribute-Value (EAV) Model
-
-Used to support flexible product attributes such as:
-
+Supports flexible product attributes such as:
 - Scale (e.g., 32mm)  
 - Material (e.g., metal)  
 - Piece count  
 
-This enables dynamic filtering but requires advanced querying techniques like **self-joins**.
+Enables dynamic filtering but requires advanced querying techniques like **self-joins**.
 
 ---
 
 ### 🔹 Advanced SQL Techniques
 
-- Multi-table joins (5+ tables)  
-- Nested subqueries  
+- Complex multi-table joins (5+ tables)  
+- Nested subqueries for ranking and filtering  
 - Aggregations: `SUM`, `AVG`, `COUNT`  
 - Time-based calculations: `TIMESTAMPDIFF`  
 - Conditional filtering: `NOT IN`, `LIKE`  
@@ -161,25 +137,18 @@ This enables dynamic filtering but requires advanced querying techniques like **
 
 ## 📊 Example Analyses
 
-- 📈 **Top Revenue Category**  
-  Identifies highest-performing product segments  
-
-- 👤 **Customer Spending Analysis**  
-  Ranks customers by total purchase value  
-
-- 🪑 **Table Utilization**  
-  Measures demand and identifies idle capacity  
-
-- 💵 **Dynamic Pricing Impact**  
-  Quantifies revenue impact during peak hours  
+- 📈 Top revenue-generating product categories  
+- 👤 Customer lifetime value and spending trends  
+- 🪑 Table utilization and peak demand analysis  
+- 💵 Revenue impact of dynamic pricing  
 
 ---
 
 ## 🚧 Key Challenges
 
-- Querying the **EAV model efficiently**  
+- Efficient querying of the **EAV model**  
 - Handling **time overlap logic** for reservations  
-- Managing **complex joins across multiple tables**  
+- Managing complex joins across multiple tables  
 - Ensuring accurate aggregation across transactional data  
 
 ---
@@ -193,11 +162,7 @@ This enables dynamic filtering but requires advanced querying techniques like **
 
 ## 🌐 Project Demo
 
-You can view the project interface here:
-
-👉 Open `index.html`  
-or  
-https://rynetroy.github.io/game_store_database
+👉 https://rynetroy.github.io/game_store_database/
 
 ---
 
@@ -219,7 +184,7 @@ April 2026
 
 ## 💡 Summary
 
-This project demonstrates how a structured relational database can be used to simulate and analyze a real-world retail business.
+This project demonstrates how a structured relational database can simulate and analyze a real-world retail business.
 
 By combining **data modeling, SQL querying, and analytical thinking**, the system delivers insights into:
 
@@ -231,8 +196,8 @@ By combining **data modeling, SQL querying, and analytical thinking**, the syste
 
 ## 🚀 Author Note
 
-This project highlights practical SQL skills aligned with real-world analytics roles, including:
+This project highlights practical skills aligned with real-world analytics roles:
 
-- Business-driven querying  
-- Data modeling  
-- Performance analysis  
+- Business-driven SQL querying  
+- Data modeling and database design  
+- Operational and performance analysis  
