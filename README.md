@@ -1,203 +1,104 @@
-# 🎮 DROP IF Orphan  
-### Video Game Retailer Sales & Operations Analytics Database  
-https://rynetroy.github.io/game_store_database/
+# DROP IF Orphan: Game Store Database
 
----
+A relational database for a fictional chain of game stores that sells board games, dice, miniatures, trading cards and rulebooks, and rents gaming tables by the hour.
 
-## 📌 Project Overview
+**17 tables · 8 stores · 13 business queries · 19 validation checks**
 
-**DROP IF Orphan** is a database-driven analytics system designed to simulate and evaluate the operations of a modern video game and tabletop retailer.
+Built as a five-person team capstone (April 2026). This portfolio edition makes the project runnable: the schema, demo data and queries are in plain SQL files, the queries are debugged, and the results are documented.
 
-The project leverages a **relational SQL database** to model real-world business workflows and generate actionable insights across:
+Presentation site: https://rynetroy.github.io/game_store_database/
 
-- 📈 Sales performance  
-- 🧍 Customer behavior  
-- 📦 Inventory management  
-- 🪑 Table rental utilization  
+## What it shows
 
----
+- A 17-table design with primary keys, foreign keys and junction tables.
+- An entity-attribute-value (EAV) model for products with different properties, and the self-joins needed to query it.
+- Time-overlap logic for table bookings and for pricing that applies only to peak hours.
+- Window functions (`ROW_NUMBER`, `RANK`) for top-N and tie handling.
+- Validation checks and a data quality report that surfaces problems the schema allows.
 
-## 🏪 Business Context
+## Run it
 
-This system models a hybrid retail business that includes:
+Requires **MariaDB 10.11+** (tested on 10.11.14) or **MySQL 8.0+** (not separately tested). Open a terminal in the repository root:
 
-- 🎲 **Product Sales** – Board games, miniatures, dice, and accessories  
-- 🪑 **Table Rentals** – In-store gaming sessions with reservations  
-- 💰 **Dynamic Pricing** – Peak-hour pricing rules for rentals  
-- 🏬 **Multi-Location Support** – Independent store operations and inventory  
+```sh
+git clone https://github.com/rynetroy/game_store_database.git
+cd game_store_database
+mariadb -u root -p
+```
 
----
+At the database prompt:
 
-## 🎯 Objectives
+```sql
+CREATE DATABASE game_store;
+USE game_store;
+SOURCE sql/01_schema.sql;
+SOURCE sql/02_seed.sql;
+SOURCE sql/03_views.sql;
+SOURCE tests/validate.sql;
+SOURCE run_reports.sql;
+```
 
-This project demonstrates how SQL can be used to solve real-world business problems by:
+All 19 validation rows should say `PASS`. The scripts do not drop any database. `SOURCE` is a command-line client command; in a SQL editor, open and run each file in the same order.
 
-- Designing a **fully normalized relational database**  
-- Executing **complex multi-table queries**  
-- Analyzing **customer and transaction data**  
-- Translating business questions into **data-driven insights**  
+Queries that depend on dates use a fixed snapshot, `SET @as_of = '2026-04-01';`, at the top of the file. Change it to `CURDATE()` for live results.
 
----
+## Queries
 
-## 🧠 Key Business Questions
+| # | Business question | Author | Main SQL concepts |
+| --- | --- | --- | --- |
+| [01](queries/01_metal_32mm_miniatures.sql) | Average price of 32mm metal miniatures | Ronald | EAV self-join |
+| [02](queries/02_top_board_game_customer.sql) | Top board game customer, last 6 months | Czanel | 6-table join, CTE, ties |
+| [03](queries/03_large_tables_with_screen.sql) | Tables that seat 6+ and have a screen | Ronald | View over EAV features |
+| [04](queries/04_book_three_tables.sql) | Can a group book 3 of those tables next Tuesday, and at what cost? | Team | Overlap check, `ROW_NUMBER` |
+| [05](queries/05_busiest_rental_day.sql) | Busiest rental day last month, by table-hours | Troy | Date ranges, `RANK` |
+| [06](queries/06_dice_sets_price_per_die.sql) | Dice sets of 7+, by price per die | Team | EAV filter, unit price |
+| [07](queries/07_top_revenue_category.sql) | Top revenue category, last 12 months | Team | Multi-join aggregation |
+| [08](queries/08_peak_pricing_cost.sql) | Cost of reservations overlapping peak hours | Troy | `GREATEST` / `LEAST` time overlap |
+| [09](queries/09_rulebook_buyers_no_tables.sql) | Rulebook buyers who never booked a table | Team | `NOT EXISTS` |
+| [10](queries/10_top_customers_top_categories.sql) | Top 3 customers and their top 3 categories | Sebastian | Nested ranking with window functions |
+| [11](queries/11_unused_tables.sql) | Tables with no bookings in 30 days | Luka | `NOT EXISTS`, date window |
+| [12](queries/12_products_per_category.sql) | Products per category | Czanel | `LEFT JOIN`, `GROUP BY` |
+| [13](queries/13_game_night_table_search.sql) | Free tables for a 5-player game, given its playtime | Sebastian | Stock check, playtime from EAV |
 
-The system answers critical operational questions such as:
+Authors follow the team's original query file. Example result, query 04:
 
-- Which product categories generate the most revenue?  
-- Who are the highest-value customers over time?  
-- What are the busiest days and peak usage hours?  
-- How do pricing rules impact total revenue?  
-- Which customers purchase products but do not engage in rentals?  
+| Store | Tables free | Can book 3 | Cost, cheapest 3 for 6 hours |
+| --- | --- | --- | --- |
+| The Dragon's Hoard | 3 | Yes | $294.00 |
+| The Critical Hit | 2 | No | |
+| Mana Burn Games | 2 | No | |
 
----
+See [sample results](docs/sample-results.md) for every query's output.
 
-## 📈 Business Impact
+## Findings
 
-### 💰 Revenue Optimization
-- Identified top-performing product categories and revenue drivers  
-- Enabled breakdown of revenue by customer, category, and time  
-- Simulated **dynamic pricing impact** on rental revenue  
+From the demo data (see [findings](docs/findings.md) for detail and next steps):
 
----
+- Board games earned 54.3% of product revenue.
+- 17 of 26 rental tables had no bookings in the 30 days before the snapshot.
+- Five days tied for "busiest day" in March; the original query silently picked one.
+- Tuesday's peak-hour rule is a 5% discount, not a surcharge.
+- The schema allows bookings outside store hours (18 of 35), reservations spread across several stores (6 of 24), and more guests than seats (4).
 
-### 👤 Customer Insights
-- Ranked customers by total spending to identify high-value segments  
-- Analyzed behavior to support targeted promotions and retention  
-- Identified cross-sell opportunities (e.g., product buyers not renting tables)  
+The demo data is small (30 customers, 60 sales), so these describe the demo store, not real buying patterns.
 
----
+## Repository layout
 
-### 🪑 Operational Efficiency
-- Measured **table utilization rates** to detect peak demand  
-- Identified busiest days and hours for staffing optimization  
-- Implemented availability logic to improve booking decisions  
+```text
+sql/                 Schema, demo data and one view
+queries/             13 standalone business queries
+tests/validate.sql   Integrity checks (all PASS)
+tests/data_quality.sql  Known data issues, reported not failed
+docs/                Schema notes, findings, changes, sample results, ERD source
+original/            The team's original SQL files, unchanged
+images/, index.html  Presentation site
+run_reports.sql      Runs all 13 queries
+```
 
----
+## Team and credit
 
-### 📦 Inventory & Product Strategy
-- Evaluated product performance using attribute-based filtering (EAV model)  
-- Identified high-demand product types  
-- Supported pricing and stocking decisions based on demand patterns  
+Team: Ronald, Czanel, Luka, Troy and Sebastian. The schema, demo data and original queries were team work; individual query authors are listed above. My own queries are 05 and 08.
 
----
+This portfolio edition (file structure, bug fixes, validation, data quality checks and documentation) was done by Troy Dela Rosa with AI-assisted code review. Every change is listed in [changes](docs/changes.md), and the team's original files are in [`original/`](original).
 
-### ⚙️ Advanced Analytics Capability
-- Built queries across **17 interconnected tables**  
-- Applied advanced SQL logic to solve end-to-end business problems  
-- Translated operational challenges into scalable data solutions  
-
----
-
-## 🗄️ Database Structure
-
-The database consists of **17 interconnected tables**, including:
-
-### Core Entities
-- Customers  
-- Products  
-- Transactions  
-- Tables (rental units)  
-- Stores  
-
-### Supporting Entities
-- Inventory  
-- Categories  
-- Pricing Rules  
-- Reservations  
-- Attributes (EAV model)  
-
-### Design Features
-- Fully normalized schema  
-- Junction tables for many-to-many relationships  
-
----
-
-## ⚙️ Technical Highlights
-
-### 🔹 Entity-Attribute-Value (EAV) Model
-Supports flexible product attributes such as:
-- Scale (e.g., 32mm)  
-- Material (e.g., metal)  
-- Piece count  
-
-Enables dynamic filtering but requires advanced querying techniques like **self-joins**.
-
----
-
-### 🔹 Advanced SQL Techniques
-
-- Complex multi-table joins (5+ tables)  
-- Nested subqueries for ranking and filtering  
-- Aggregations: `SUM`, `AVG`, `COUNT`  
-- Time-based calculations: `TIMESTAMPDIFF`  
-- Conditional filtering: `NOT IN`, `LIKE`  
-- Advanced logic: `GREATEST`, `LEAST`  
-
----
-
-## 📊 Example Analyses
-
-- 📈 Top revenue-generating product categories  
-- 👤 Customer lifetime value and spending trends  
-- 🪑 Table utilization and peak demand analysis  
-- 💵 Revenue impact of dynamic pricing  
-
----
-
-## 🚧 Key Challenges
-
-- Efficient querying of the **EAV model**  
-- Handling **time overlap logic** for reservations  
-- Managing complex joins across multiple tables  
-- Ensuring accurate aggregation across transactional data  
-
----
-
-## 🛠️ Technologies Used
-
-- SQL (MySQL)  
-- Relational Database Design (ERD Modeling)  
-
----
-
-## 🌐 Project Demo
-
-👉 https://rynetroy.github.io/game_store_database/
-
----
-
-## 👥 Team
-
-- Ronald  
-- Czanel  
-- Luka  
-- Troy  
-- Sebastian  
-
----
-
-## 📅 Date
-
-April 2026  
-
----
-
-## 💡 Summary
-
-This project demonstrates how a structured relational database can simulate and analyze a real-world retail business.
-
-By combining **data modeling, SQL querying, and analytical thinking**, the system delivers insights into:
-
-- Revenue performance  
-- Customer behavior  
-- Operational efficiency  
-
----
-
-## 🚀 Author Note
-
-This project highlights practical skills aligned with real-world analytics roles:
-
-- Business-driven SQL querying  
-- Data modeling and database design  
-- Operational and performance analysis  
+Note: the presentation site (`index.html`) still shows the original query code.
